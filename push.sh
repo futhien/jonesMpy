@@ -1,4 +1,3 @@
 git add *
-git commit  "commit All"  futhien fukuda.cast@gmail.com
+git commit  "commit All"
 git remote add origin https://github.com/futhien/jonesMpy.git
-
