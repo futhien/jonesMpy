@@ -1,8 +1,9 @@
 import numpy	as np
-
-_sizeOf_=2
+import matplotlib.pyplot as plt
+_sizeOf_=10
 X=np.arange(_sizeOf_)
 Y=np.arange(_sizeOf_)
+XX,YY=np.meshgrid(X,Y)
 Ax=1*np.random.random((_sizeOf_,_sizeOf_))
 Ay=1*np.random.random((_sizeOf_,_sizeOf_))
 fai=np.pi*2*np.random.random((_sizeOf_,_sizeOf_))
@@ -41,7 +42,7 @@ def wave(Ex,Ey,fai,delta):
 '''進行波 電界強度、位相(x基準)、位相差、で規定
    Ax,Ay,Ex(fai),Ey(fai),fai(x),delta(y-x),Ix,Iy'''
 def wave(Ax,Ay,fai,delta):
-	return Ax,Ay,Ax*np.e**(fai*1j),Ay*np.e**((fai+delta)*1j),fai,delta,Ax*np.e**(fai*1j)*(np.conj(Ax*np.e**(fai*1j))),Ay*np.e**((fai+delta)*1j)*np.conj(Ay*np.e**((fai+delta)*1j))
+	return Ax,Ay,Ax*np.e**(fai*1j),Ay*np.e**((fai+delta)*1j),fai,delta,(Ax*np.e**(fai*1j))*np.conj(Ax*np.e**(fai*1j)),(Ay*np.e**((fai+delta)*1j))*np.conj(Ay*np.e**((fai+delta)*1j))
 '''
 print(JwaveP(1/4*np.pi,1/4*np.pi))
 print(JLinerP(1/4*np.pi))
@@ -63,17 +64,25 @@ print("wave")
 result=wave(Ax,Ay,fai,delta)
 print("Ax")
 print(result[0])
-print("Ay")
+print("EAy")
 print(result[1])
 print("Ex")
 print(result[2])
-print("Ex")
+print("Ey")
 print(result[3])
 print("fai")
 print(result[4])
 print("delta")
 print(result[5])
 print("Ix")
-print(result[6])
+print(np.real(result[6]))
 print("Iy")
-print(result[7])
+print(np.real(result[7]))
+
+
+'''ベクトル図で表記	'''
+plt.quiver(XX,YY,np.real(result[2]),np.real(result[3]),linewidth=2, cmap=plt.cm.autumn)
+plt.gca().set_ylim([0, _sizeOf_])
+plt.gca().set_xlim([0, _sizeOf_])	
+plt.show()
+
